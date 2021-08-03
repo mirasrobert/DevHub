@@ -25,8 +25,8 @@ router.post(
     ).isLength({ min: 6 }),
   ],
   async (req, res) => {
-    const errors = validationResult(req); // Returns error object
-    // Check for errors
+    const errors = validationResult(req); // Returns validation error object
+    // Check for validation errors
     if (!errors.isEmpty()) {
       // Return status of 400 and response with array of errors
       return res.status(400).json({ errors: errors.array() });

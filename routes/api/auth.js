@@ -30,7 +30,7 @@ router.get("/", app.use(auth), async (req, res) => {
 
 /*
  * @route 	POST api/auth
- * @desc 	Authenticate User and Get token
+ * @desc 	Authenticate User and Get token -- LOGIN
  * @access 	Public
  */
 router.post(
@@ -40,8 +40,8 @@ router.post(
     check("password", "Password is requrired").exists(),
   ],
   async (req, res) => {
-    const errors = validationResult(req); // Returns error object
-    // Check for errors
+    const errors = validationResult(req); // Returns validation error object
+    // Check for validation errors
     if (!errors.isEmpty()) {
       // Return status of 400 and response with array of errors
       return res.status(400).json({ errors: errors.array() });
@@ -51,7 +51,7 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      // Check if user exist
+      // Check if user email exist
       let user = await User.findOne({ email: email });
 
       // If user is NOT found or Wrong Email
