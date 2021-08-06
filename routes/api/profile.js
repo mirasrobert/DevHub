@@ -1,5 +1,5 @@
 const express = require('express');
-const request = require('request');
+const axios = require('axios');
 const config = require('config');
 const router = express.Router();
 const auth = require('../../middleware/auth');
@@ -393,27 +393,27 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
  */
 router.get('/github/:username', (req, res) => {
   try {
-  
-    const options = {
-      uri: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`,
-      method: 'GET',
-      headers: {
-        'user-agent': 'node.js',
-        'Authorization': `Bearer ${config.get('githubPersonalToken')}`,
-      }
+    const URL = `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`;
+
+    // Pass bearer token to request to the API as many as you want -- no Rate Limit
+    const headers = {
+      'user-agent': 'node.js',
+      Authorization: `Bearer ${config.get('githubPersonalToken')}`,
     };
 
-    // Using request dependency to make request to github api
-    request(options, (error, response, body) => {
-      if(error) console.error(error);
+    // Make a HTTP GET request on the API
+    axios
+      .get(URL, { headers })
+      .then((response) => {
+        res.status(200).json(response.data); // Get the data
+      })
+      .catch((err) => {
+        console.error(err);
 
-        if(response.statusCode != 200)
-          return res.status(404).json({ msg: 'No GitHub profile found' })
-
-      res.json(JSON.parse(body));
-
-    });
-
+        // If something went wrong or github user not found
+        if (response.status != 200)
+          return res.status(404).json({ msg: 'No GitHub profile found' });
+      });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
