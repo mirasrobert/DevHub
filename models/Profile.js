@@ -4,11 +4,11 @@ const mongoose = require("mongoose");
 // Schema = Table columns
 const ProfileShema = new mongoose.Schema({
   user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,  // user table id
       ref: 'user'
   },
   company: {
-    type: String
+    type: String 
   },
   website: {
     type: String
@@ -21,7 +21,7 @@ const ProfileShema = new mongoose.Schema({
     required: true
   },
   skills: {
-    type: [String],
+    type: [String], // Array of Strings
     required: true
   },
   bio: {
@@ -30,7 +30,7 @@ const ProfileShema = new mongoose.Schema({
   githubusername: {
     type: String
   },
-  experience: [
+  experience: [ // Array of objects // Has Many in RDBMS
     {
       title: {
         type: String,
@@ -60,7 +60,7 @@ const ProfileShema = new mongoose.Schema({
       }
     }
   ],
-  education: [
+  education: [ // Array of objects // Has Many in RDBMS
     {
       school: {
         type: String,
@@ -90,7 +90,7 @@ const ProfileShema = new mongoose.Schema({
       }
     }
   ],
-  social: {
+  social: { // Nested Object // Has One in RDMBS
     youtube: {
       type: String
     },
