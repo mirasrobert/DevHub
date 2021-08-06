@@ -365,33 +365,12 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
   }
 });
 
-router.delete('/education/:edu_id', auth, async (req, res) => {
-  try {
-    // Get profile by user field id
-    const profile = await Profile.findOne({ user: req.user.id });
-
-    // Get remove index
-    const removeIndex = profile.education
-      .map((edu) => edu.id) // Make an array of all id in the array of objects
-      .indexOf(req.params.edu_id); // Get the index of that id on the new array
-
-    profile.education.splice(removeIndex, 1); // Remove the item on the array by index
-
-    await profile.save(); // Save
-
-    res.json(profile);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Server Error');
-  }
-});
-
 /*
  * @route 	DELETE api/profile/github/:username
  * @desc 	  Get github repos from GitHub
  * @access 	Public
  */
-router.get('/github/:username', (req, res) => {
+router.get('/github/:username', async (req, res) => {
   try {
     const URL = `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`;
 
@@ -402,6 +381,7 @@ router.get('/github/:username', (req, res) => {
     };
 
     // Make a HTTP GET request on the API
+    /* Synchronous axios
     axios
       .get(URL, { headers })
       .then((response) => {
@@ -414,8 +394,19 @@ router.get('/github/:username', (req, res) => {
         if (response.status != 200)
           return res.status(404).json({ msg: 'No GitHub profile found' });
       });
+
+     */
+
+    // Asynchronous axios
+    const response = await axios.get(URL, { headers });
+
+    res.status(200).json(response.data);
   } catch (error) {
     console.error(error.message);
+
+    if (error.response.status == 404)
+      return res.status(404).json({ msg: 'No GitHub profile found' });
+
     res.status(500).send('Server Error');
   }
 });
