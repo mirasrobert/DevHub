@@ -1,5 +1,0 @@
-{
-  "mongoURI": "YOUR_MONGODB_URI",
-  "jwtSecret": "YOUR_JWT_SECRET",
-  "githubPersonalToken": "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN"
-}

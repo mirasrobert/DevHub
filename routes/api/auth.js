@@ -1,30 +1,31 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const auth = require("../../middleware/auth");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const config = require("config");
-const { check, validationResult } = require("express-validator/check");
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const config = require('config');
+const issueJwt = require('../../utils/issue-jwt');
+const { check, validationResult } = require('express-validator/check');
 
-const User = require("../../models/User");
+const User = require('../../models/User');
 
-const app = express();
+const auth = passport.authenticate('jwt', {session: false})
 /*
  * @route 	GET api/auth
  * @desc 	Get the authenticated user
  * @access 	Public
  * @protected-route    auth middleware
  */
-router.get("/", app.use(auth), async (req, res) => {
+router.get('/', auth, async (req, res) => {
   // If user has verified token from middleware 'auth'
   try {
-    const user = await User.findById(req.user.id).select("-password"); // Return user without password
+    const user = await User.findById(req.user.id).select('-password'); // Return user without password
 
     // Return response of user json
     res.json(user);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
@@ -34,10 +35,10 @@ router.get("/", app.use(auth), async (req, res) => {
  * @access 	Public
  */
 router.post(
-  "/",
+  '/',
   [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is requrired").exists(),
+    check('email', 'Please include a valid email').isEmail(),
+    check('password', 'Password is requrired').exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req); // Returns validation error object
@@ -58,7 +59,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] }); // Return error to the client
+          .json({ errors: [{ msg: 'Invalid Credentials' }] }); // Return error to the client
       }
 
       /*
@@ -71,28 +72,16 @@ router.post(
       if (!isMatch) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] }); // Return error to the client
+          .json({ errors: [{ msg: 'Invalid Credentials' }] }); // Return error to the client
       }
 
-      // Return the jsonwebtoken
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
+      const jwt = issueJwt(user); // Issue a jwt token
 
-      jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        { expiresIn: 360000 },
-        (error, token) => {
-          if (error) throw error;
-          res.json({ token }); // Return a response of the jwt token
-        }
-      );
+      // Issue a jwt token
+      res.json({ success: true, token: jwt.token, expiresIn: jwt.expires });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Server Error"); // Return a response of status 500
+      res.status(500).send('Server Error'); // Return a response of status 500
     }
   }
 );

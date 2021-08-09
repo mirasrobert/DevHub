@@ -114,6 +114,6 @@ const ProfileShema = new mongoose.Schema({
 });
 
 // Create a user model
-const User = mongoose.model("profile", ProfileShema);
+const Profile = mongoose.model("profile", ProfileShema);
 
-module.exports = User;
+module.exports = Profile;

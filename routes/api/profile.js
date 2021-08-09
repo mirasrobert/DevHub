@@ -1,13 +1,17 @@
 const express = require('express');
 const axios = require('axios');
-const config = require('config');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const passport = require('passport');
+
 const { check, validationResult } = require('express-validator/check');
 
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
-const { response } = require('express');
+
+const auth = passport.authenticate('jwt', {session: false})
+
+// Load config env
+require('dotenv').config();
 
 /*
  * @route 	GET api/profile/me
@@ -377,7 +381,7 @@ router.get('/github/:username', async (req, res) => {
     // Pass bearer token to request to the API as many as you want -- no Rate Limit
     const headers = {
       'user-agent': 'node.js',
-      Authorization: `Bearer ${config.get('githubPersonalToken')}`,
+      'Authorization': `Bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
     };
 
     // Make a HTTP GET request on the API

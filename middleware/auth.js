@@ -1,6 +1,11 @@
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
+/*
+ * @desc custom authorization using jsonwebtoken (not using passport-jwt)
+ * JWT Auth middleware 1.0  
+ */
+
 module.exports = function (req, res, next) {
   // Get the token from the header
   const token = req.header("x-auth-token");
