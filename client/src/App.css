@@ -1,0 +1,178 @@
+* {
+  box-sizing: border-box;
+}
+
+.logo {
+  background-color: #f7971d;
+  color: #222;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#landing {
+  position: relative;
+  min-height: 100vh;
+  background: url("./img/showcase.jpg") no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+.landing-text {
+  text-align: center;
+}
+
+.bg-overlay {
+  position: absolute;
+  background-color: rgba(1, 1, 1, 0.8);
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.img-round {
+  border-radius: 50%;
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 2rem;
+  align-items: center;
+  padding: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  background-color: rgba(1, 1, 1, 0.1);
+}
+
+.my-profile {
+	color: #fff;
+	padding-top: 2rem;
+}
+ 
+.social ul{
+	display: flex;
+	justify-content: center; 
+	align-items: center;
+}
+
+.social ul a {
+	color: #fff;
+}
+
+.social ul li {
+	padding-left: 1.2rem;
+  transition: 300ms ease;
+}
+
+.social ul li:hover {
+	transform: translateY(-10px);
+}
+
+.my-skills ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-skills li {
+    padding-bottom: 10px;
+    padding-left: 0.9rem;
+    color: #111 !important;
+}
+
+#sub-bio h2,h3,p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.8;
+}
+
+#sub-bio h3 {
+  font-size: 1rem;
+}
+
+#sub-bio p {
+  font-size: 0.8rem;
+}
+
+.semi-card {
+  background-color: rgba(1, 1, 1, 0.1);
+  color: #111 !important;
+}
+
+.semi-card-white {
+  background: #f1f1f1;
+  color: #111 !important;
+  padding: 1rem;
+}
+
+.line {
+  border-bottom: 1px solid rgba(41, 41, 41, 0.133);
+  margin: 1rem 2rem;
+}
+
+/* Social Links */
+#create-profile .fa-twitter {
+  color: #38a1f3;
+}
+#create-profile .fa-facebook {
+  color: #3b5998;
+}
+#create-profile .fa-instagram {
+  color: #3f729b;
+}
+#create-profile .fa-youtube {
+  color: #c4302b;
+}
+#create-profile .fa-linkedin {
+  color: #0077b5;
+}
+
+.reaction {
+  margin-top: 10px;
+  font-size: 1.3rem;
+  background: #f1f1f1;
+  color: #111 !important;
+  padding: 7px;
+}
+
+.has-liked {
+  color: #0077b5 !important;
+}
+
+.card-text {
+  font-size: 0.8rem;
+  margin:0;
+  padding: 0;
+}
+
+.user-name {
+  font-size: 0.9rem;
+}
+
+.topics div:not(:last-child) {
+  border-bottom: 1px solid rgba(1, 1, 1, 0.1);
+  margin-bottom: 1rem;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  /* PROFILES */
+  #profiles .info h2 {
+    font-size: 1rem !important;
+  }
+
+  #profiles .info p {
+    font-size: 0.8rem !important;
+  }
+
+  #profiles .skills li {
+    font-size: 0.8rem !important;
+  }
+
+  #profiles .info .btn {
+    font-size: .5rem !important;
+  }
+}
