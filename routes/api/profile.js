@@ -7,8 +7,9 @@ const { check, validationResult } = require('express-validator/check');
 
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
+const Post = require('../../models/Post');
 
-const auth = passport.authenticate('jwt', {session: false})
+const auth = passport.authenticate('jwt', { session: false });
 
 // Load config env
 require('dotenv').config();
@@ -188,7 +189,8 @@ router.get('/user/:user_id', async (req, res) => {
 
 router.delete('/', auth, async (req, res) => {
   try {
-    //TODO: remove user's post
+    // Remove user posts
+    await Post.deleteMany({ user: req.user.id });
 
     // Remove the profile by user's Id
     await Profile.findOneAndRemove({ user: req.user.id });
@@ -381,7 +383,7 @@ router.get('/github/:username', async (req, res) => {
     // Pass bearer token to request to the API as many as you want -- no Rate Limit
     const headers = {
       'user-agent': 'node.js',
-      'Authorization': `Bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
+      Authorization: `Bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
     };
 
     // Make a HTTP GET request on the API

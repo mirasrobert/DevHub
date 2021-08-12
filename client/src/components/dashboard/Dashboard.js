@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
+import Experience from './Experience';
+import Education from './Education';
 import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profile.js';
+import { deleteAccount, getCurrentProfile } from '../../actions/profile.js';
 
 const dashboard = ({
   getCurrentProfile,
   auth: { user },
   profile: { profile, loading },
+  deleteAccount,
 }) => {
   useEffect(() => {
     getCurrentProfile();
@@ -31,7 +34,7 @@ const dashboard = ({
                 </p>
               </div>
 
-              {!loading && profile !== null ? (
+              {profile !== null ? (
                 <Fragment>
                   <DashboardActions />
                 </Fragment>
@@ -50,76 +53,25 @@ const dashboard = ({
 
           {!loading && profile !== null ? (
             <Fragment>
-              <div className="row">
-                <div className="col-lg-12">
-                  <h2 className="text-info fs-5">Experience Credentials</h2>
-                </div>
-              </div>
+              {/* Profile Experience Table */}
+              {!loading && profile.experience !== null ? (
+                <Experience experience={profile.experience} />
+              ) : null}
 
-              <div className="row">
-                <div className="col-lg-10 col-sm-12">
-                  <table className="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Company</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Years</th>
-                        <th scope="col"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Microsoft</td>
-                        <td>Senior developer</td>
-                        <td>Oct 2011 - Current</td>
-                        <td>
-                          <button className="btn btn-danger">
-                            <i className="fas fa-trash-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-lg-12">
-                  <h2 className="text-info fs-5">Education Credentials</h2>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-lg-10 col-sm-12">
-                  <table className="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">School</th>
-                        <th scope="col">Degree</th>
-                        <th scope="col">Years</th>
-                        <th scope="col"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>University of Washington</td>
-                        <td>Bachelor's</td>
-                        <td>Sept 1993 - June 1999</td>
-                        <td>
-                          <button className="btn btn-danger">
-                            <i className="fas fa-trash-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              {/* Profile Education Table */}
+              {!loading && profile.education !== null ? (
+                <Education educations={profile.education} />
+              ) : null}
             </Fragment>
           ) : null}
 
           <div className="mb-2">
-            <button className="btn btn-danger">
+            <button
+              onClick={() => {
+                deleteAccount();
+              }}
+              className="btn btn-danger"
+            >
               <i className="fas fa-user-minus"></i> Delete Account
             </button>
           </div>
@@ -133,6 +85,7 @@ dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
 };
 
 // Get the state
@@ -141,4 +94,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
+  dashboard
+);
