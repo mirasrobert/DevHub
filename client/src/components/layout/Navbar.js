@@ -19,10 +19,10 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
         </a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">
+        <Link className="nav-link" to="/dashboard">
           {' '}
           Dashboard{' '}
-        </a>
+        </Link>
       </li>
       <li className="nav-item dropdown">
         <a
@@ -34,13 +34,12 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
           aria-expanded="false"
         >
           <i className="fas fa-user"></i>
-          John Doe
         </a>
         <div className="dropdown-menu">
           <a className="dropdown-item" href="profile.html">
             Profile
           </a>
-          <a onClick={logout} className="dropdown-item" href="/">
+          <a onClick={logout} className="dropdown-item" href="/login">
             Logout
           </a>
         </div>

@@ -12,7 +12,7 @@
 #landing {
   position: relative;
   min-height: 100vh;
-  background: url("./img/showcase.jpg") no-repeat;
+  background: url('./img/showcase.jpg') no-repeat;
   background-size: cover;
   background-attachment: fixed;
   color: #fff;
@@ -47,27 +47,27 @@
 }
 
 .my-profile {
-	color: #fff;
-	padding-top: 2rem;
+  color: #fff;
+  padding-top: 2rem;
 }
- 
-.social ul{
-	display: flex;
-	justify-content: center; 
-	align-items: center;
+
+.social ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .social ul a {
-	color: #fff;
+  color: #fff;
 }
 
 .social ul li {
-	padding-left: 1.2rem;
+  padding-left: 1.2rem;
   transition: 300ms ease;
 }
 
 .social ul li:hover {
-	transform: translateY(-10px);
+  transform: translateY(-10px);
 }
 
 .my-skills ul {
@@ -77,12 +77,14 @@
 }
 
 .my-skills li {
-    padding-bottom: 10px;
-    padding-left: 0.9rem;
-    color: #111 !important;
+  padding-bottom: 10px;
+  padding-left: 0.9rem;
+  color: #111 !important;
 }
 
-#sub-bio h2,h3,p {
+#sub-bio h2,
+h3,
+p {
   margin: 0;
   padding: 0;
   line-height: 1.8;
@@ -143,7 +145,7 @@
 
 .card-text {
   font-size: 0.8rem;
-  margin:0;
+  margin: 0;
   padding: 0;
 }
 
@@ -156,6 +158,14 @@
   margin-bottom: 1rem;
 }
 
+.spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031; /* High z-index so it is on top of the page */
+  top: 50%;
+  right: 50%; /* or: left: 50%; */
+  overflow: hidden;
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -173,6 +183,6 @@
   }
 
   #profiles .info .btn {
-    font-size: .5rem !important;
+    font-size: 0.5rem !important;
   }
 }
