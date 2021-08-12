@@ -1,7 +1,10 @@
 import { React, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 
-export default function Login() {
+function Login({ login, isAuthenticated }) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,11 +19,16 @@ export default function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log('logi');
+    login(email, password);
   };
 
+  // Redirect if authenticated
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
-    <section id="register" className="py-5">
+    <section id="register" className="pb-4">
       <div className="container">
         <div className="row">
           <div className="col-lg-8 col-sm-12">
@@ -30,23 +38,12 @@ export default function Login() {
               Connect with everybody
             </p>
 
-            <div className="alert alert-dismissible alert-danger">
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="alert"
-              ></button>
-              <strong>
-                Invaid credentials, Please check your email or password
-              </strong>
-            </div>
-
             <form onSubmit={(e) => onSubmit(e)}>
               <div className="form-group mb-3">
                 <div className="form-floating has-danger mb-3">
                   <input
                     type="email"
-                    className="form-control is-invalid"
+                    className="form-control"
                     id="email"
                     placeholder="name@example.com"
                     name="email"
@@ -57,9 +54,6 @@ export default function Login() {
                     required
                   />
                   <label>Email address</label>
-                  <div className="invalid-feedback">
-                    Sorry, that username's taken. Try another?
-                  </div>
                 </div>
 
                 <div className="form-floating mb-3">
@@ -81,7 +75,7 @@ export default function Login() {
 
               <div className="form-group mb-2">
                 <button type="submit" className="btn btn-info px-3">
-                  <i className="fas fa-sign-in-alt"></i>
+                  <i className="fas fa-sign-in-alt me-1"></i>
                   Login
                 </button>
               </div>
@@ -102,3 +96,15 @@ export default function Login() {
     </section>
   );
 }
+
+// Login Props
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

@@ -1,14 +1,16 @@
 import React from 'react';
 import { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
+import axios from 'axios';
+
 //import axios from 'axios';
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +26,21 @@ const Register = ({ setAlert, register }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Test Call Server
+  const callServer = async (e) => {
+    const token = JSON.parse(localStorage.getItem('token')) || null;
+
+    console.log(token);
+
+    const headers = {
+      Authorization: token,
+    };
+
+    const res = await axios.get('/api/auth', { headers });
+
+    console.log(res.data);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirm) {
@@ -31,31 +48,12 @@ const Register = ({ setAlert, register }) => {
       setErrors('is-invalid');
     } else {
       register({ name, email, password });
-      /*
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-
-        // Convert js object to json
-        const body = JSON.stringify(newUser);
-
-        // Make a request to the server
-        const res = await axios.post('/api/users', body, config);
-        console.log(res.data);
-      } catch (error) {
-        console.error(error.response.data);
-      }*/
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Fragment>
@@ -145,6 +143,8 @@ const Register = ({ setAlert, register }) => {
                 </div>
               </form>
 
+              {/* <button onClick={(e) => callServer(e)}>Test Axios</button> */}
+
               <p>
                 Already have account?
                 <span className="text-info">
@@ -165,6 +165,11 @@ const Register = ({ setAlert, register }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert, register })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);

@@ -6,22 +6,29 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
 } from './constant';
 import { setAlert } from './alert';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
   // If there is a token in local storage
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
+
+  const token = JSON.parse(localStorage.getItem('token')) || null;
+
+  if (localStorage.getItem('token') !== null) {
+    setAuthToken(token);
   }
 
   try {
+    /*
     const headers = {
-      'Authorization': localStorage.getItem('token')
-    };
+      Authorization: token,
+    };*/
 
-    const res = await axios.get('/api/auth', { headers });
+    const res = await axios.get('/api/auth');
 
     dispatch({
       type: USER_LOADED,
@@ -55,6 +62,8 @@ export const register =
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
+
+      dispatch(loadUser());
     } catch (err) {
       // Get the errors
       const errors = err.response.data.errors;
@@ -72,3 +81,47 @@ export const register =
       });
     }
   };
+
+// Login User
+export const login = (email, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    // Make a request from server
+    const res = await axios.post('/api/auth', body, config);
+
+    // If axios is success -- put token in localStorage
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    // Get the errors
+    const errors = err.response.data.errors;
+
+    // If there are errors, show them
+    if (errors) {
+      errors.forEach((error) => {
+        dispatch(setAlert(error.msg, 'danger'));
+      });
+    }
+
+    // Dispatch LOGIN_FAIL to remove token from localStorage
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
+// Clear Profile -- Logout
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
+};

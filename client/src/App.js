@@ -5,7 +5,7 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
-import { loadUser } from './actions/auth';
+import { loadUser, logout } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
 // Redux
@@ -15,20 +15,22 @@ import store from './store';
 import './css/bootstrap.min.css';
 import './App.css';
 
-if (localStorage.token) { 
-  setAuthToken(localStorage.token);
-}
+if (localStorage.getItem('token') !== null) {
+  setAuthToken(JSON.parse(localStorage.getItem('token')));
+} else store.dispatch(logout());
 
 const App = () => {
   // Run Once
   useEffect(() => {
-    console.log('Use effect is working');
-    store.dispatch(loadUser());
+    if (localStorage.getItem('token') !== null) {
+      store.dispatch(loadUser());
+    } else {
+      console.log('Error no token');
+    }
   }, []);
 
-
   return (
-    <Provider store={store}>    
+    <Provider store={store}>
       <Router>
         <Fragment>
           <Navbar />
