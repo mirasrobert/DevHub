@@ -1,15 +1,22 @@
 import React from 'react';
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-export default function Register() {
+//import axios from 'axios';
+
+const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirm: '',
   });
+
+  const [errors, setErrors] = useState('');
 
   const { name, email, password, confirm } = formData;
 
@@ -20,9 +27,10 @@ export default function Register() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirm) {
-      console.log('Password do not match');
+      setAlert('Password do not match', 'danger');
+      setErrors('is-invalid');
     } else {
-      console.log('Succcess');
+      register({ name, email, password });
       /*
       const newUser = {
         name,
@@ -51,7 +59,7 @@ export default function Register() {
 
   return (
     <Fragment>
-      <section id="register" className="py-5">
+      <section id="register" className="pb-4">
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-sm-12">
@@ -95,7 +103,7 @@ export default function Register() {
                   <div className="form-floating mb-3">
                     <input
                       type="password"
-                      className="form-control"
+                      className={`form-control ${errors}`}
                       id="password"
                       placeholder="Password"
                       name="password"
@@ -113,7 +121,7 @@ export default function Register() {
                   <div className="form-floating">
                     <input
                       type="password"
-                      className="form-control"
+                      className={`form-control ${errors}`}
                       id="confirmPassword"
                       value={confirm}
                       name="confirm"
@@ -122,6 +130,10 @@ export default function Register() {
                       required
                     />
                     <label>Confirm password</label>
+
+                    <div className="invalid-feedback">
+                      Password does not match
+                    </div>
                   </div>
                 </div>
 
@@ -148,4 +160,11 @@ export default function Register() {
       </section>
     </Fragment>
   );
-}
+};
+
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+};
+
+export default connect(null, { setAlert, register })(Register);

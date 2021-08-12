@@ -1,4 +1,10 @@
 // Root Reducer
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+import alert from './alert.js';
+import auth from './auth';
+
+export default combineReducers({
+  alert,
+  auth
+});
