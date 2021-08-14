@@ -46,7 +46,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading]); // Run after loading
+  }, [loading, getCurrentProfile]); // Run after loading
 
   const {
     company,
@@ -94,7 +94,7 @@ const EditProfile = ({
             <form onSubmit={(e) => onSubmit(e)}>
               <div className="form-group">
                 <div className="form-group mb-3">
-                  <label for="career" className="form-label">
+                  <label className="form-label">
                     Select Professional Status
                   </label>
                   <select
@@ -121,9 +121,7 @@ const EditProfile = ({
                 </div>
 
                 <div className="form-group mb-3">
-                  <label for="company" className="form-label">
-                    Company
-                  </label>
+                  <label className="form-label">Company</label>
                   <input
                     type="text"
                     className="form-control"
@@ -140,9 +138,7 @@ const EditProfile = ({
                 </div>
 
                 <div className="form-group mb-3">
-                  <label for="company" className="form-label">
-                    Your Website
-                  </label>
+                  <label className="form-label">Your Website</label>
                   <input
                     type="text"
                     className="form-control"
@@ -158,9 +154,7 @@ const EditProfile = ({
                   </small>
                 </div>
                 <div className="form-group mb-3">
-                  <label for="location" className="form-label">
-                    Location
-                  </label>
+                  <label className="form-label">Location</label>
                   <input
                     type="text"
                     className="form-control"
@@ -176,9 +170,7 @@ const EditProfile = ({
                   </small>
                 </div>
                 <div className="form-group mb-3">
-                  <label for="skills" className="form-label">
-                    Skills
-                  </label>
+                  <label className="form-label">Skills</label>
                   <input
                     type="text"
                     className="form-control"
@@ -195,11 +187,9 @@ const EditProfile = ({
                   </small>
                 </div>
                 <div className="form-group mb-3">
-                  <label for="github" className="form-label">
-                    Github Username
-                  </label>
+                  <label className="form-label">Github Username</label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
                     id="github"
                     aria-describedby="emailHelp"
@@ -213,9 +203,7 @@ const EditProfile = ({
                   </small>
                 </div>
                 <div className="form-group mb-3">
-                  <label for="bio" className="form-label">
-                    Bio
-                  </label>
+                  <label className="form-label">Bio</label>
                   <textarea
                     className="form-control"
                     id="bio"
@@ -242,7 +230,7 @@ const EditProfile = ({
                 {displaySocialInputs && (
                   <Fragment>
                     <div className="form-group d-flex justify-content-start mb-3">
-                      <label for="twitter" className="m-0 p-0 me-3">
+                      <label className="m-0 p-0 me-3">
                         <i className="fab fa-twitter fa-2x"></i>
                       </label>
                       <div className="">
@@ -258,7 +246,7 @@ const EditProfile = ({
                       </div>
                     </div>
                     <div className="form-group d-flex justify-content-start mb-3">
-                      <label for="facebook" className="m-0 p-0 me-3">
+                      <label className="m-0 p-0 me-3">
                         <i className="fab fa-facebook fa-2x"></i>
                       </label>
                       <div className="">
@@ -274,7 +262,7 @@ const EditProfile = ({
                       </div>
                     </div>
                     <div className="form-group d-flex justify-content-start mb-3">
-                      <label for="youtube" className="m-0 p-0 me-3">
+                      <label className="m-0 p-0 me-3">
                         <i className="fab fa-youtube fa-2x"></i>
                       </label>
                       <div className="">
@@ -290,7 +278,7 @@ const EditProfile = ({
                       </div>
                     </div>
                     <div className="form-group d-flex justify-content-start mb-3">
-                      <label for="linkedin" className="m-0 p-0 me-3">
+                      <label className="m-0 p-0 me-3">
                         <i className="fab fa-linkedin fa-2x"></i>
                       </label>
                       <div className="">
@@ -306,7 +294,7 @@ const EditProfile = ({
                       </div>
                     </div>
                     <div className="form-group d-flex justify-content-start mb-4">
-                      <label for="instagram" className="m-0 p-0 me-3">
+                      <label className="m-0 p-0 me-3">
                         <i className="fab fa-instagram fa-2x"></i>
                       </label>
                       <div className="">

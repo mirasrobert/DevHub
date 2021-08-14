@@ -1,5 +1,4 @@
 const express = require('express');
-const config = require('config');
 const passport = require('passport');
 const { check, validationResult } = require('express-validator/check');
 const router = express.Router();
@@ -298,7 +297,7 @@ router.delete('/comment/:postId/:commentId', auth, async (req, res) => {
       return res.status(401).json({ msg: 'User not authorized' });
     }
 
-    // Get the index of the comment 
+    // Get the index of the comment
     const removeIndex = post.comments
       .map((comment) => comment._id.toString())
       .indexOf(req.params.commentId);

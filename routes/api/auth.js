@@ -3,13 +3,12 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const config = require('config');
 const issueJwt = require('../../utils/issue-jwt');
 const { check, validationResult } = require('express-validator/check');
 
 const User = require('../../models/User');
 
-const auth = passport.authenticate('jwt', {session: false})
+const auth = passport.authenticate('jwt', { session: false });
 /*
  * @route 	GET api/auth
  * @desc 	Get the authenticated user

@@ -9,14 +9,14 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
   const authLinks = (
     <ul className="navbar-nav ms-auto">
       <li className="nav-item">
-        <a className="nav-link" href="#">
+        <Link className="nav-link" to="/profiles">
           Developers{' '}
-        </a>
+        </Link>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">
+        <Link className="nav-link" to="/posts">
           Post
-        </a>
+        </Link>
       </li>
       <li className="nav-item">
         <Link className="nav-link" to="/dashboard">
@@ -50,7 +50,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
   const guestLinks = (
     <ul className="navbar-nav ms-auto">
       <li className="nav-item">
-        <Link className="nav-link active" to="#">
+        <Link className="nav-link active" to="/profiles">
           Developers
         </Link>
       </li>
