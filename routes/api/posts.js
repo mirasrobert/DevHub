@@ -256,7 +256,7 @@ router.post(
       // Save the post on to the database.
       await post.save();
 
-      res.json(post.comments); // Return the post
+      res.json(post.comments); // Return the comments
     } catch (error) {
       console.error(error.message);
 

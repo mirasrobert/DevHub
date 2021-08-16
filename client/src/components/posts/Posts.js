@@ -7,7 +7,7 @@ import PostForm from './PostForm';
 import { connect } from 'react-redux';
 import { getPosts } from '../../actions/post';
 
-const Posts = ({ getPosts, post: { posts, loading } }) => {
+const Posts = ({ getPosts, post: { posts, loading }, auth: { user } }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
@@ -18,7 +18,7 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
 		<div className="row justify-content-center py-5">
           <div className="col-lg-7 posts">
   			{/* FORM */}
-  			<PostForm />
+  			{ user !== null && (<PostForm user={user} />) }
 			{/* END FORM */}
 
   			
@@ -43,10 +43,12 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
 Posts.propTypes = {
   getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getPosts })(Posts);
