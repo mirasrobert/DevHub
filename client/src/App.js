@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
+import NotFound from './components/layout/NotFound';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
@@ -47,14 +48,13 @@ const App = () => {
           <Navbar />
 
           {/* IF URL IS IN path = '/' then Render the component = <component> */}
-          <Route exact path="/" component={Landing} />  
-
           <div className="py-3">
             <Alert />
-           </div>
+          </div>
 
           <div>
             <Switch>
+              <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
@@ -80,22 +80,15 @@ const App = () => {
                 path="/add-education"
                 component={AddEducation}
               />
-              <PrivateRoute
-                exact
-                path="/posts"
-                component={Posts}
-              />
+              <PrivateRoute exact path="/posts" component={Posts} />
 
-              <PrivateRoute
-                exact
-                path="/post/:postId"
-                component={Post}
-              />
+              <PrivateRoute exact path="/post/:postId" component={Post} />
+
+              <Route component={NotFound} />
             </Switch>
           </div>
 
           <Footer />
-
         </Fragment>
       </Router>
     </Provider>
