@@ -1,28 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { Fragment } from 'react';
 
-function Navbar({ auth: { isAuthenticated, loading }, logout }) {
+function Navbar({ auth: { isAuthenticated, user, loading }, logout }) {
   const authLinks = (
     <ul className="navbar-nav ms-auto">
       <li className="nav-item">
-        <Link className="nav-link" to="/profiles">
+        <NavLink className="nav-link" to="/profiles">
           Developers{' '}
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" to="/posts">
+        <NavLink className="nav-link" to="/posts">
           Post
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" to="/dashboard">
+        <NavLink className="nav-link" to="/dashboard">
           {' '}
           Dashboard{' '}
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item dropdown">
         <a
@@ -36,9 +36,11 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
           <i className="fas fa-user"></i>
         </a>
         <div className="dropdown-menu">
-          <a className="dropdown-item" href="profile.html">
-            Profile
-          </a>
+          {!loading && isAuthenticated && user !== null && (
+            <Link className="dropdown-item" to={`/profile/${user._id}`}>
+              Profile
+            </Link>
+          )}
           <a onClick={logout} className="dropdown-item" href="/login">
             Logout
           </a>
@@ -50,9 +52,9 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
   const guestLinks = (
     <ul className="navbar-nav ms-auto">
       <li className="nav-item">
-        <Link className="nav-link active" to="/profiles">
+        <NavLink className="nav-link" to="/profiles">
           Developers
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item dropdown">
         <Link
@@ -85,7 +87,7 @@ function Navbar({ auth: { isAuthenticated, loading }, logout }) {
             <i className="fas fa-code"></i>
           </span>{' '}
           Dev
-          <span className="logo">Hub</span>
+          <span className="logo ms-1">Hub</span>
         </Link>
         <button
           className="navbar-toggler"

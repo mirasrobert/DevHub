@@ -14,7 +14,7 @@ const PostItem = ({
   deletePost,
 }) => {
   return (
-    <div className="card">
+    <div className="card mb-3">
       {/* <div className="card-header row">
         <img
           height="500"
@@ -40,7 +40,7 @@ const PostItem = ({
               align-items-start align-content-center
               my-2"
           >
-            <a href="#">
+            <Link to={`/profile/${user}`} target="_blank">
               <img
                 className="img-fluid img-round"
                 src={avatar}
@@ -48,7 +48,7 @@ const PostItem = ({
                 height="40"
                 alt="user"
               />
-            </a>
+            </Link>
             <div className="name ms-3">
               <h5 className="card-subtitle mt-2 text-info user-name">
                 {name.split(' ')[0]} {name.split(' ')[1].charAt(0)}.
@@ -58,18 +58,24 @@ const PostItem = ({
               </small>
             </div>
           </div>
-          {/* CHECK IF AUTHENTICATED USER OWNS THE POST */}
-          { !auth.loading && auth.user._id === user &&  (
+          
+          
             <div className="dropdown">
             <a className="text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               <i className="fas fa-ellipsis-v"></i>
             </a>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              
               <li><Link className="dropdown-item" target="_blank" to={`/post/${_id}`}>Open Discussion</Link></li>
-              <li><a onClick={(e) => deletePost(_id)} className="dropdown-item" type="button">Delete</a></li>
+              
+              {/* CHECK IF AUTHENTICATED USER OWNS THE POST */}
+              { !auth.loading && auth.user._id === user && (
+                <li><a onClick={(e) => deletePost(_id)} className="dropdown-item" type="button">Delete</a></li>
+              ) }
+              
             </ul>
             </div>
-          ) }
+          
         </div>
         <div>
           <p className="card-text">{text}</p>

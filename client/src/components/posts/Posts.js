@@ -13,7 +13,7 @@ const Posts = ({ getPosts, post: { posts, loading }, auth: { user } }) => {
   }, [getPosts]);
 
   return loading ? <Spinner /> : <Fragment>
-	  <section id="post" className="bg-warning">
+	  <section id="post" className="">
 		<div className="container">
 		<div className="row justify-content-center py-5">
           <div className="col-lg-7 posts">
@@ -30,9 +30,9 @@ const Posts = ({ getPosts, post: { posts, loading }, auth: { user } }) => {
 		   </div>
 
 		   {/* SIDE POSTS */}
-		   <div className="col-lg-3 mt-5 mt-lg-0">
+		   {/* <div className="col-lg-3 mt-5 mt-lg-0">
 				<PostSide />
-		   </div>
+		   </div> */}
 
 		</div>	  
 		</div>

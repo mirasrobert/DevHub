@@ -12,6 +12,7 @@ import {
   CLEAR_PROFILE,
 } from './constant';
 import { setAlert } from './alert';
+import { setToast } from './toast';
 
 // Load User
 export const loadUser = () => async (dispatch) => {

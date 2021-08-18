@@ -10,6 +10,8 @@ function Login({ login, isAuthenticated }) {
     password: '',
   });
 
+  const [errors, setErrors] = useState('');
+
   const { email, password } = formData;
 
   const onChange = (e) => {
@@ -19,7 +21,13 @@ function Login({ login, isAuthenticated }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    login(email, password);
+    if (email == '') {
+      setErrors('is-invalid');
+    } else if (password == '') {
+      setErrors('is-invalid');
+    } else {
+      login(email, password);
+    }
   };
 
   // Redirect if authenticated
@@ -28,7 +36,7 @@ function Login({ login, isAuthenticated }) {
   }
 
   return (
-    <section id="register" className="pb-4">
+    <section id="register" className="pb-4 mt-3">
       <div className="container">
         <div className="row">
           <div className="col-lg-8 col-sm-12">
@@ -43,7 +51,7 @@ function Login({ login, isAuthenticated }) {
                 <div className="form-floating has-danger mb-3">
                   <input
                     type="email"
-                    className="form-control"
+                    className={`form-control ${errors}`}
                     id="email"
                     placeholder="name@example.com"
                     name="email"
@@ -51,15 +59,17 @@ function Login({ login, isAuthenticated }) {
                     onChange={(e) => {
                       onChange(e);
                     }}
-                    required
                   />
                   <label>Email address</label>
+                  <div className="invalid-feedback">
+                      Email is required
+                    </div>
                 </div>
 
                 <div className="form-floating mb-3">
                   <input
                     type="password"
-                    className="form-control"
+                    className={`form-control ${errors}`}
                     id="password"
                     placeholder="Password"
                     name="password"
@@ -67,9 +77,11 @@ function Login({ login, isAuthenticated }) {
                     onChange={(e) => {
                       onChange(e);
                     }}
-                    required
                   />
                   <label>Password</label>
+                  <div className="invalid-feedback">
+                      Password is required
+                  </div>
                 </div>
               </div>
 

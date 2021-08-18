@@ -2,9 +2,11 @@ import { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
+import Footer from './components/layout/Footer';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
+import Toast from './components/layout/Toast';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile-form/CreateProfile';
 import EditProfile from './components/profile-form/EditProfile';
@@ -35,8 +37,6 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
       store.dispatch(loadUser());
-    } else {
-      console.log('Error no token');
     }
   }, []);
 
@@ -47,9 +47,11 @@ const App = () => {
           <Navbar />
 
           {/* IF URL IS IN path = '/' then Render the component = <component> */}
-          <Route exact path="/" component={Landing} />
+          <Route exact path="/" component={Landing} />  
 
+          <div className="py-3">
             <Alert />
+           </div>
 
           <div>
             <Switch>
@@ -91,6 +93,9 @@ const App = () => {
               />
             </Switch>
           </div>
+
+          <Footer />
+
         </Fragment>
       </Router>
     </Provider>

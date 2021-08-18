@@ -17,7 +17,7 @@ const Post = ({ getSinglePost, match, post: { post, loading } }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <section id="post" className="py-5 bg-warning">
+      <section id="post" className="py-5">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-7 posts">
@@ -115,10 +115,10 @@ const Post = ({ getSinglePost, match, post: { post, loading } }) => {
               </div>
             </div>
 
-            <div className="col-lg-3 mt-5 mt-lg-0">
+            {/* <div className="col-lg-3 mt-5 mt-lg-0">
               <PostSide />
-            </div>
-          </div>
+            </div> */}
+          </div>  
         </div>
       </section>
     </Fragment>

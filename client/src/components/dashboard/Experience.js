@@ -37,7 +37,7 @@ const Experience = ({ experience, deleteExperience }) => {
       </div>
 
       <div className="row">
-        <div className="col-lg-10 col-sm-12">
+        <div className="col-lg-10 col-sm-12 table-responsive">
           <table className="table table-hover">
             <thead>
               <tr>

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 //import axios from 'axios';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated, setToast }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,8 +43,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+  
     if (password !== confirm) {
-      setAlert('Password do not match', 'danger');
       setErrors('is-invalid');
     } else {
       register({ name, email, password });
@@ -72,15 +72,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                   <div className="form-floating mb-3">
                     <input
                       type="text"
-                      className="form-control"
+                      className={`form-control`}
                       id="name"
                       name="name"
                       placeholder="name@example.com"
                       value={name}
                       onChange={(e) => onChange(e)}
-                      required
                     />
                     <label>Name</label>
+                    <div className="invalid-feedback">
+                      Name is required
+                    </div>
                   </div>
                   <div className="form-floating mb-3">
                     <input
@@ -91,14 +93,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                       name="email"
                       value={email}
                       onChange={(e) => onChange(e)}
-                      required
                     />
                     <label>Email address</label>
                     <small id="emailHelp" className="form-text text-muted">
                       We'll never share your email with anyone else.
                     </small>
                   </div>
-                  <div className="form-floating mb-3">
+                  <div className="form-floating mb-3 has-danger">
                     <input
                       type="password"
                       className={`form-control ${errors}`}
@@ -107,7 +108,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                       name="password"
                       value={password}
                       onChange={(e) => onChange(e)}
-                      required
                     />
                     <label>Password</label>
                     <small id="emailHelp" className="form-text text-muted">
@@ -125,7 +125,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                       name="confirm"
                       onChange={(e) => onChange(e)}
                       placeholder="Confirm password"
-                      required
                     />
                     <label>Confirm password</label>
 

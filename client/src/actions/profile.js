@@ -12,6 +12,7 @@ import {
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
 } from './constant';
+import { setToast } from './toast';
 
 // Get current user profile
 export const getCurrentProfile = () => async (dispatch) => {
